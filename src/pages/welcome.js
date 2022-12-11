@@ -52,7 +52,7 @@ export function welcome() {
                 <br/>
                 <img src={submitSS} alt="" width="500"/>
                 <br/>
-                <b>It takes 1 or 2 minutes if you select only your youtube history on the
+                <b>It takes 1 to 5 minutes if you select only your youtube history on the
                     contrary to Google's "possibly hours or days"
                     statement.</b>
             </li>
