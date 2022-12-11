@@ -62,6 +62,7 @@ export function errorPage(title) {
                     <li>Finnish</li>
                     <li>Czech</li>
                     <li>Bulgarian</li>
+                    <li>Hungarian</li>
                 </ul>
             </ol>
             <br/>

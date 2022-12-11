@@ -27,6 +27,7 @@ Supported languages:
 - Finnish
 - Czech
 - Bulgarian
+- Hungarian
 
 Chinese and Portuguese history files are the same as English
  */
@@ -60,6 +61,7 @@ export const videoTitlesInDifferentLanguages = [
     "(.*) katsottiin",
     "Zhlédli jste video (.*)",
     "Гледахте (.*)",
+    "Megtekintette a következőt: (.*)",
 ];
 
 export const watchHistoryInDifferentLanguages = [
@@ -90,4 +92,5 @@ export const watchHistoryInDifferentLanguages = [
     "YouTube-katseluhistoria",
     "Historie sledování YouTube",
     "История на гледане в YouTube",
+    "YouTube-os megtekintési előzmények",
 ];
