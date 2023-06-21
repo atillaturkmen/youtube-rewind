@@ -33,9 +33,42 @@ function HomePage() {
     useScript(process.env.PUBLIC_URL + "/autoCompleteForm.js");
 
     function navbar() {
+        if (filesContent.length === 0) {
+            return <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand>Rewind</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link href="#/home" onClick={() => {
+                            setPage("home")
+                        }}>Home</Nav.Link>
+                        <Nav.Link href="#/privacy" onClick={() => {
+                            setPage("privacy")
+                        }}>Privacy Statement</Nav.Link>
+                        <Nav.Link href="#/contact" onClick={() => {
+                            setPage("contact")
+                        }}>Contact</Nav.Link>
+                        <Nav.Link href="#/github" onClick={() => {
+                            setPage("github")
+                        }}>Fork on GitHub</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
+        } else if (loading) {
+            return <Navbar bg="dark" variant="dark">
+                <Container>
+                    <Navbar.Brand>Rewind</Navbar.Brand>
+                    <Nav className="me-auto">
+                        <Nav.Link>Home</Nav.Link>
+                        <Nav.Link>Privacy Statement</Nav.Link>
+                        <Nav.Link>Contact</Nav.Link>
+                        <Nav.Link>Fork on GitHub</Nav.Link>
+                    </Nav>
+                </Container>
+            </Navbar>
+        }
         return <Navbar bg="dark" variant="dark" expand="md">
             <Container>
-                <Navbar.Brand>Rewind 2022</Navbar.Brand>
+                <Navbar.Brand>Rewind</Navbar.Brand>
                 <Nav className="me-auto">
                     <Nav.Link href="#/channels" onClick={() => {
                         setPage("channels")
@@ -53,6 +86,9 @@ function HomePage() {
                     <Nav.Link href="#/contact" onClick={() => {
                         setPage("contact")
                     }}>Contact</Nav.Link>
+                    <Nav.Link href="#/github" onClick={() => {
+                        setPage("github")
+                    }}>Fork on GitHub</Nav.Link>
                 </Nav>
             </Container>
         </Navbar>
@@ -129,56 +165,56 @@ function HomePage() {
 
     if (loading) {
         return <div>
-            <Navbar bg="dark" variant="dark">
-                <Container>
-                    <Navbar.Brand>Rewind 2022</Navbar.Brand>
-                    <Nav className="me-auto">
-                        <Nav.Link>Home</Nav.Link>
-                        <Nav.Link>Privacy Statement</Nav.Link>
-                    </Nav>
-                </Container>
-            </Navbar>
+            {navbar()}
             <div className="container"><br/>Loading, Please Wait...</div>
         </div>;
     } else if (page === "privacy") {
         return (
             <div>
-                {filesContent.length === 0 ?
-                    <Navbar bg="dark" variant="dark">
-                        <Container>
-                            <Navbar.Brand>Rewind 2022</Navbar.Brand>
-                            <Nav className="me-auto">
-                                <Nav.Link href="#/home" onClick={() => {
-                                    setPage("channels")
-                                }}>Home</Nav.Link>
-                                <Nav.Link to="#/privacy" onClick={() => {
-                                    setPage("privacy")
-                                }}>Privacy Statement</Nav.Link>
-                            </Nav>
-                        </Container>
-                    </Navbar> : navbar()}
+                {navbar()}
                 {privacy()}
+            </div>
+        );
+    } else if (page === "contact") {
+        return (
+            <div>
+                {navbar()}
+                <div className="container">
+                    <br/>
+                    <h2>Contact Information</h2>
+                    <br/>
+                    <p>If you encountered a bug, have an idea for improvement or want to provide general feedback please
+                        mail to: <a
+                            href="mailto:contact@youtuberewind.net">contact@youtuberewind.net</a></p>
+                </div>
+            </div>
+        );
+    } else if (page === "github") {
+        return (
+            <div>
+                {navbar()}
+                <div className="container">
+                    <br/>
+                    <h2>Fork on GitHub</h2>
+                    <br/>
+                    <p>
+
+                        Welcome to our project's website! To access the code, documentation, and resources, please visit
+                        the GitHub repository directly at <a
+                        href="https://github.com/atillaturkmen/youtube-rewind">https://github.com/atillaturkmen/youtube-rewind</a>.
+                        Feel free to dive into
+                        the code and explore the inner workings of our project. We appreciate your support and encourage
+                        you to provide any feedback or contributions. Thank you for your interest!</p>
+                </div>
             </div>
         );
     } else if (filesContent.length === 0) {
         return (
             <div>
-                <Navbar bg="dark" variant="dark">
-                    <Container>
-                        <Navbar.Brand>Rewind 2022</Navbar.Brand>
-                        <Nav className="me-auto">
-                            <Nav.Link href="#/home" onClick={() => {
-                                setPage("home")
-                            }}>Home</Nav.Link>
-                            <Nav.Link href="#/privacy" onClick={() => {
-                                setPage("privacy")
-                            }}>Privacy Statement</Nav.Link>
-                        </Nav>
-                    </Container>
-                </Navbar>
+                {navbar()}
                 <div className="container">
                     <br/>
-                    <h2>YouTube Rewind 2022</h2>
+                    <h2>YouTube Rewind</h2>
                     <br/>
                     <p>
                         This is a simple website to see statistics on videos you've watched on YouTube.
@@ -436,20 +472,6 @@ function HomePage() {
                 </div>
             );
         }
-    } else if (page === "contact") {
-        return (
-            <div>
-                {navbar()}
-                <div className="container">
-                    <br/>
-                    <h2>Contact Information</h2>
-                    <br/>
-                    <p>If you encountered a bug, have an idea for improvement or want to provide general feedback please
-                        mail to: <a
-                            href="mailto:contact@youtuberewind.net">contact@youtuberewind.net</a></p>
-                </div>
-            </div>
-        );
     } else {
         return (
             <div>
