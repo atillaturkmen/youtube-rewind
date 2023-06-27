@@ -18,6 +18,7 @@ import InnerHTML from 'dangerously-set-html-content'
 import {processFile} from "../util/fileUtils";
 import {errorPage} from "./errorPage";
 import {ShareButtons} from "./shareButtons";
+import {copyTableToClipboard} from "../util/copyTableToClipboard";
 
 function HomePage() {
     const [openFileSelector, {filesContent, loading}] = useFilePicker({
@@ -104,7 +105,7 @@ function HomePage() {
             </label>];
     }
 
-    function dropDowns() {
+    function dropDowns(tableId) {
         const years = [];
         for (let i = new Date().getFullYear(); i >= 2004; i--) {
             years.push(<Dropdown.Item onClick={() => setYear(i.toString())}>{i}</Dropdown.Item>);
@@ -143,6 +144,11 @@ function HomePage() {
                             {years}
                         </Dropdown.Menu>
                     </Dropdown>
+                </Col>
+                <Col>
+                    <button id="copyButton" className="btn btn-outline-secondary"
+                            onClick={() => copyTableToClipboard(tableId)}>Copy Table
+                    </button>
                 </Col>
                 <Col>
                     {shortFilterCheckbox()}
@@ -301,6 +307,8 @@ function HomePage() {
             );
         }
 
+        let channelsTableId = "channels-table";
+
         return (
             <div>
                 {navbar()}
@@ -310,14 +318,15 @@ function HomePage() {
                     <br/>
                     {ShareButtons(shareObject, month, year)}
                     <br/>
-                    {dropDowns()}
+                    {dropDowns(channelsTableId)}
                     <br/>
                     {
                         Object.keys(channels).length === 0 ? <p>No channels found.</p> :
                             <div>
                                 <p>{deletedRatio} videos you watched in this time period are deleted.</p>
                                 <div className="table-responsive">
-                                    <table className="table table-bordered table-striped table-hover">
+                                    <table id={channelsTableId}
+                                           className="table table-bordered table-striped table-hover">
                                         <thead>
                                         <tr>
                                             <th>#</th>
@@ -379,6 +388,8 @@ function HomePage() {
             );
         }
 
+        let videosTableId = "videos-table";
+
         return (
             <div>
                 {navbar()}
@@ -388,14 +399,15 @@ function HomePage() {
                     <br/>
                     {ShareButtons(shareObject, month, year)}
                     <br/>
-                    {dropDowns()}
+                    {dropDowns(videosTableId)}
                     <br/>
                     {
                         Object.keys(videos).length === 0 ? <p>No videos found.</p> :
                             <div>
                                 <p>{deletedRatio} videos you watched in this time period are deleted.</p>
                                 <div className="table-responsive">
-                                    <table className="table table-bordered table-striped table-hover">
+                                    <table id={videosTableId}
+                                           className="table table-bordered table-striped table-hover">
                                         <thead>
                                         <tr>
                                             <th>#</th>
