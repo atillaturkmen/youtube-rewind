@@ -27,7 +27,7 @@ function HomePage() {
     const [showInstructions, setShowInstructions] = useState(false);
     const [showSS, setShowSS] = useState(false);
     const [page, setPage] = useState("channels");
-    const [year, setYear] = useState("2022");
+    const [year, setYear] = useState(new Date().getFullYear().toString());
     const [month, setMonth] = useState("Any Month");
     const [channelFilter, setChannelFilter] = useState("");
     const [shortFilter, setShortFilter] = useState(false);
