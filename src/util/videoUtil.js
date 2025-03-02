@@ -60,7 +60,7 @@ export function mostWatchedChannels(json, month, year, shortFilter) {
     let filteredByTime = filterVideosByTime(json, month, year);
     let filtered = filterNonVideos(filteredByTime);
     if (shortFilter) {
-        filtered = filterShorts(filteredByTime);
+        filtered = filterShorts(filtered);
     }
     let deletedRemoved = filterDeletedVideos(filtered);
     let deletedRatio = `${filtered.length - deletedRemoved.length} out of ${filtered.length}`;
@@ -86,7 +86,7 @@ export function mostWatchedVideos(json, month, year, shortFilter) {
     let filteredByTime = filterVideosByTime(json, month, year);
     let filtered = filterNonVideos(filteredByTime);
     if (shortFilter) {
-        filtered = filterShorts(filteredByTime);
+        filtered = filterShorts(filtered);
     }
     let deletedRemoved = filterDeletedVideos(filtered);
     let deletedRatio = `${filtered.length - deletedRemoved.length} out of ${filtered.length}`;
