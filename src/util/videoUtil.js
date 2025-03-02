@@ -41,8 +41,10 @@ function filterYouTubeMusic(videos) {
 }
 
 export function filterNonVideos(videos) {
-    let result = filterDeletedVideos(videos);
-    return filterPollsAndAds(result);
+    let result = filterYouTubeMusic(videos);
+    result = filterPollsAndAds(result);
+    result = result.filter(video => getVideoName(video.title) !== "Unknown Video");
+    return result;
 }
 
 export function getWatchHistory(json) {
@@ -56,14 +58,13 @@ export function getWatchHistory(json) {
 
 export function mostWatchedChannels(json, month, year, shortFilter) {
     let filteredByTime = filterVideosByTime(json, month, year);
-    filteredByTime = filterPollsAndAds(filteredByTime);
+    let filtered = filterNonVideos(filteredByTime);
     if (shortFilter) {
-        filteredByTime = filterShorts(filteredByTime);
+        filtered = filterShorts(filteredByTime);
     }
-    filteredByTime = filterYouTubeMusic(filteredByTime);
-    let filtered = filterDeletedVideos(filteredByTime);
-    let deletedRatio = `${filteredByTime.length - filtered.length} out of ${filteredByTime.length}`;
-    let channels = filtered.map(video => video.subtitles[0].name);
+    let deletedRemoved = filterDeletedVideos(filtered);
+    let deletedRatio = `${filtered.length - deletedRemoved.length} out of ${filtered.length}`;
+    let channels = deletedRemoved.map(video => video.subtitles[0].name);
     let channelCount = new Map();
     for (let i = 0; i < channels.length; i++) {
         if (channelCount[channels[i]] === undefined) {
@@ -83,21 +84,20 @@ export function mostWatchedChannels(json, month, year, shortFilter) {
 
 export function mostWatchedVideos(json, month, year, shortFilter) {
     let filteredByTime = filterVideosByTime(json, month, year);
-    filteredByTime = filterPollsAndAds(filteredByTime);
+    let filtered = filterNonVideos(filteredByTime);
     if (shortFilter) {
-        filteredByTime = filterShorts(filteredByTime);
+        filtered = filterShorts(filteredByTime);
     }
-    filteredByTime = filterYouTubeMusic(filteredByTime);
-    let filtered = filterDeletedVideos(filteredByTime);
-    let deletedRatio = `${filteredByTime.length - filtered.length} out of ${filteredByTime.length}`;
-    let videos = filtered.map(video => video.titleUrl);
+    let deletedRemoved = filterDeletedVideos(filtered);
+    let deletedRatio = `${filtered.length - deletedRemoved.length} out of ${filtered.length}`;
+    let videos = deletedRemoved.map(video => video.titleUrl);
     let videoCount = new Map();
     for (let i = 0; i < videos.length; i++) {
         if (videoCount[videos[i]] === undefined) {
             videoCount[videos[i]] = {
                 count: 1,
-                channel: filtered[i].subtitles[0].name,
-                name: getVideoName(filtered[i].title)
+                channel: deletedRemoved[i].subtitles[0].name,
+                name: getVideoName(deletedRemoved[i].title)
             };
         } else {
             videoCount[videos[i]].count += 1;
