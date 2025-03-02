@@ -36,6 +36,10 @@ function filterShorts(videos) {
     return videos.filter(video => !video.title.includes("#shorts") && !video.title.includes("#Shorts"));
 }
 
+function filterYouTubeMusic(videos) {
+    return videos.filter(video => video.header === "YouTube");
+}
+
 export function filterNonVideos(videos) {
     let result = filterDeletedVideos(videos);
     return filterPollsAndAds(result);
@@ -56,6 +60,7 @@ export function mostWatchedChannels(json, month, year, shortFilter) {
     if (shortFilter) {
         filteredByTime = filterShorts(filteredByTime);
     }
+    filteredByTime = filterYouTubeMusic(filteredByTime);
     let filtered = filterDeletedVideos(filteredByTime);
     let deletedRatio = `${filteredByTime.length - filtered.length} out of ${filteredByTime.length}`;
     let channels = filtered.map(video => video.subtitles[0].name);
@@ -82,6 +87,7 @@ export function mostWatchedVideos(json, month, year, shortFilter) {
     if (shortFilter) {
         filteredByTime = filterShorts(filteredByTime);
     }
+    filteredByTime = filterYouTubeMusic(filteredByTime);
     let filtered = filterDeletedVideos(filteredByTime);
     let deletedRatio = `${filteredByTime.length - filtered.length} out of ${filteredByTime.length}`;
     let videos = filtered.map(video => video.titleUrl);
